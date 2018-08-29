@@ -1,0 +1,226 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CarFactory
+{
+    class Complex 
+    {
+        #region Member Variables
+        int real;
+        int imag;
+        static int count;
+        #endregion
+        #region Properties
+        public int Real
+        {
+            get { return this.real; }
+            set { this.real = value; }
+        }
+        public int Image
+        {
+            get { return this.imag; }
+            set { this.imag = value; }
+        }
+        public static int Count 
+        {
+            get { return count; }
+        }
+        #endregion
+        #region Constructors
+        public Complex(int real,int imag)
+        {
+            this.real = real;
+            this.imag = imag;
+            count++;
+        }
+        public Complex(int rei):this(rei,rei) 
+        { }
+        public Complex():this(0,0) 
+        { }
+        static Complex()
+        {
+            count = 0;
+        }
+        public Complex(Complex num){
+            this.real = num.real;
+            this.imag = num.imag;
+        }
+        #endregion
+        #region Overloading Operator's Methods  
+        /// <summary>
+        /// to clone the constructor which return Complex object
+        /// </summary>
+        /// <returns>new object</returns>
+        public Complex Clone()
+        {
+            return new Complex(this);
+        }
+        /// to make math operations on the class object
+
+
+        /// <summary>
+        /// add two objects from Complex class
+        /// </summary>
+        /// <param name="c1">Complex.ob1</param>
+        /// <param name="c2">Complex.ob2</param>
+        /// <returns>Complex.ob2+Complex.ob2</returns>
+        public static Complex operator +(Complex c1, Complex c2)
+        {
+            return new Complex(c1.real + c2.real, c1.imag + c2.imag);
+        }
+        /// <summary>
+        /// sub two objects from Complex class
+        /// </summary>
+        /// <param name="c1">Complex.ob1</param>
+        /// <param name="c2">Complex.ob2</param>
+        /// <returns>Complex.ob2-Complex.ob2</returns>
+        public static Complex operator -(Complex c1, Complex c2)
+        {
+            return new Complex(c1.real - c2.real, c1.imag - c2.imag);
+        }
+        /// <summary>
+        /// add object from Complex class and Num
+        /// </summary>
+        /// <param name="c1">Complex.ob1</param>
+        /// <param name="c2">Num</param>
+        /// <returns>Complex.ob2+Num</returns>
+        public static Complex operator +(Complex c, int no)
+        {
+            return new Complex(c.real + no, c.imag);
+        }
+        /// <summary>
+        /// add Num and object from Complex class
+        /// by using the prev meyhhod directoly
+        /// </summary>
+        /// <param name="c1">Num</param>
+        /// <param name="c2">Complex.ob1</param>
+        /// <returns>Num+Complex.ob2</returns>        
+        public static Complex operator +(int no, Complex c)
+        {
+            return c + no;
+        }
+        /// <summary>
+        /// sub object from Complex class and Num
+        /// </summary>
+        /// <param name="c1">Complex.ob1</param>
+        /// <param name="c2">Num</param>
+        /// <returns>Complex.ob2-Num</returns>
+        public static Complex operator -(Complex c, int no)
+        {
+            return new Complex(c.real - no, c.imag);
+        }
+        /// <summary>
+        /// sub Num and object from Complex class
+        /// by using the prev meyhhod directoly
+        /// </summary>
+        /// <param name="c1">Num</param>
+        /// <param name="c2">Complex.ob1</param>
+        /// <returns>Num-Complex.ob2</returns>        
+        public static Complex operator -(int no, Complex c)
+        {
+            return c - no;
+        }
+        /// <summary>
+        /// To Casting(convert) the value without asking for implicit the num
+        /// but that cast the real value only
+        /// </summary>
+        /// <param name="no">Num</param>
+        /// <returns> return value with data type Complex </returns>
+        public static implicit operator Complex(int no)
+        {
+            return new Complex(no);
+        }
+        /// <summary>
+        /// To Casting(convert) the value without asking for implicit the num
+        /// but that return the real value only
+        /// </summary>
+        /// <param name="no">Num</param>
+        /// <returns> return value with data type Complex </returns>
+        public static explicit operator int(Complex c)
+        {
+            return c.real;
+        }
+        /// <summary>
+        /// to compare two values
+        /// </summary>
+        /// <param name="c1">Value 1</param>
+        /// <param name="c2">Value 2</param>
+        /// <returns>true is value 1>= value 2</returns>
+        public static bool operator >=(Complex c1, Complex c2)
+        {
+            bool result = false;
+            double value1 = Math.Sqrt(Math.Pow(c1.real, 2) + Math.Pow(c1.imag, 2));
+            double value2 = Math.Sqrt(Math.Pow(c2.real, 2) + Math.Pow(c2.imag, 2));
+            if (value1>value2 || (c1.real==c2.real&&c1.imag==c2.imag))
+            {
+                result = true;
+            }
+            return result;
+        }
+        /// <summary>
+        /// to compare two values
+        /// </summary>
+        /// <param name="c1">Value 1</param>
+        /// <param name="c2">Value 2</param>
+        /// <returns>true is value 1> value 2</returns>
+        public static bool operator >(Complex c1, Complex c2)
+        {
+            bool result = false;
+            double value1 = Math.Sqrt(Math.Pow(c1.real, 2) + Math.Pow(c1.imag, 2));
+            double value2 = Math.Sqrt(Math.Pow(c2.real, 2) + Math.Pow(c2.imag, 2));
+            if (value1 > value2)
+            {
+                result = true;
+            }
+            return result;
+        }
+        /// <summary>
+        /// to compare two values
+        /// using prev function(operator >) direcroly
+        /// </summary>
+        /// <param name="c1">Value 1</param>
+        /// <param name="c2">Value 2</param>
+        /// <returns>true is value 1<= value 2</returns>
+        public static bool operator <=(Complex c1, Complex c2)
+        {
+            bool result = false;
+            
+            if (!(c1>c2))
+            {
+                result = true;
+            }
+            return result;
+        }
+        /// <summary>
+        /// to compare two values
+        /// using prev function(operator >=) direcroly
+        /// </summary>
+        /// <param name="c1">Value 1</param>
+        /// <param name="c2">Value 2</param>
+        /// <returns>true is value 1< value 2</returns>
+        public static bool operator <(Complex c1, Complex c2)
+        {
+            bool result = false;
+            if (!(c1 >= c2))
+            {
+                result = true;
+            }
+            return result;
+        }
+        /// <summary>
+        /// to add one on the object
+        /// </summary>
+        /// <param name="c">object which you want to add</param>
+        /// <returns>ob++</returns>
+        public static Complex operator ++ (Complex c)
+        {
+            ++c.real;
+            ++c.imag;
+            return new Complex(c.real, c.imag);
+        }
+        #endregion   
+    }
+}
